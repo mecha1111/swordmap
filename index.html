@@ -23,8 +23,9 @@
       <div class="sd-header"><span class="sd-chk"></span>Stage Settings</div>
       <div class="sd-body">
         <div class="sd-row"><label>Stage Name</label><input type="text" id="stageName2" value="Stage_01"></div>
-        <div class="sd-row"><label>Sword Count</label>
-          <div class="sd-stepper">
+        <div class="sd-sword-box">
+          <div class="sd-sword-lbl">🗡️ 검 횟수</div>
+          <div class="sd-stepper big">
             <button onclick="swAdj(-1)">−</button>
             <input type="number" id="sdVal" value="3" min="0" onchange="swSet(this.value)">
             <button onclick="swAdj(1)">+</button>
