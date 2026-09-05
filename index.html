@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="ko"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>프리마 맵 에디터</title><link rel="stylesheet" href="style.min.css"></head>
+<body>
+<div class="menubar">
+  <div class="m" onclick="newStage()">새로</div>
+  <div class="m" onclick="loadJSON()">열기</div>
+  <div class="m" onclick="exportJSON()">저장</div>
+  <div class="m" onclick="capture()">캡처</div>
+  <div class="m" onclick="handoff()" style="color:#ffd76a">전달</div>
+  <span class="stage"></span>
+  <input type="hidden" id="stageName" value="Stage_01">
+  <div class="right">
+    <div class="m" onclick="undo()">↶<span class="kbd">Ctrl+Z</span></div>
+    <div class="m" onclick="redo()">↷<span class="kbd">Ctrl+Y</span></div>
+    <span class="title">프리마 맵 에디터</span>
+  </div>
+</div>
+
+<div class="layout">
+  <div style="display:grid;grid-template-rows:auto 1fr;min-height:0">
+    <div class="stage-dash">
+      <div class="sd-header"><span class="sd-chk"></span>Stage Settings</div>
+      <div class="sd-body">
+        <div class="sd-row"><label>Stage Name</label><input type="text" id="stageName2" value="Stage_01"></div>
+        <div class="sd-row"><label>Sword Count</label>
+          <div class="sd-stepper">
+            <button onclick="swAdj(-1)">−</button>
+            <input type="number" id="sdVal" value="3" min="0" onchange="swSet(this.value)">
+            <button onclick="swAdj(1)">+</button>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="win">
+      <div class="wtab"><span class="ic" style="background:#5c8dc0"></span>Hierarchy</div>
+      <div class="wbody"><div class="tree" id="tree"></div></div>
+    </div>
+  </div>
+  <div class="rsz" id="rszL"></div>
+
+  <div class="win scene">
+    <div class="wtab"><span class="ic" style="background:#8a6ad0"></span>Scene</div>
+    <div class="host" id="host">
+      <canvas id="scene"></canvas>
+      <div class="bar tools" id="tools">
+        <div class="tb on" data-t="paint" title="붓 (B)">🖌</div>
+        <div class="tb" data-t="box" title="사각 채우기 (U)">▦</div>
+        <div class="tb" data-t="erase" title="지우개 (D) · 우클릭">⌫</div>
+        <div class="tb" data-t="select" title="선택·이동 (V)">➤</div>
+        <div class="tb" onclick="fitView()" title="전체 보기 (F)">⛶</div>
+      </div>
+      <div class="bar play">
+        <div class="tb" id="playBtn" onclick="toggleSim()" title="테스트 재생 (Space)">▶</div>
+        <div class="tb" onclick="stopSim()" title="정지·되돌리기">⟲</div>
+      </div>
+      <div class="info" id="info">—</div>
+      <div class="dash" id="dash">
+        <div class="dash-obj" id="dashObj"></div>
+        <div class="dash-keys">← → 이동 · Z 점프 · X 공격</div>
+      </div>
+      <div class="simnote on" id="simnote">← → 이동 · Z 점프 · X 공격 · 참고용 물리</div>
+    </div>
+  </div>
+  <div class="rsz" id="rszR"></div>
+
+  <div class="rightcol">
+    <div class="win">
+      <div class="wtab"><span class="ic" style="background:#4ea36a"></span>Tile Palette</div>
+      <div class="pal-hd">타일셋에서 드래그해 브러시 선택</div>
+      <div class="pal-view" id="palView"><canvas id="pal"></canvas></div>
+      <div class="brush-row"><span>브러시</span><canvas id="brushPrev" width="40" height="40"></canvas><span id="brushInfo">타일 없음</span></div>
+      <div class="pf-hd">오브젝트 (클릭 후 배치)</div>
+      <div class="pf-grid" id="pfgrid"></div>
+    </div>
+    <div class="rsz row" id="rszP"></div>
+    <div class="win">
+      <div class="wtab"><span class="ic" style="background:#c9a23c"></span>Inspector</div>
+      <div class="wbody insp" id="insp"></div>
+    </div>
+  </div>
+</div>
+<div class="toast" id="toast"></div>
+<div class="tut-overlay" id="tutOverlay">
+  <div class="tut-spot" id="tutSpot"></div>
+  <div class="tut-box" id="tutBox">
+    <div class="tut-step" id="tutStep">1 / 5</div>
+    <div class="tut-title" id="tutTitle"></div>
+    <div class="tut-desc" id="tutDesc"></div>
+    <div class="tut-btns">
+      <button class="tut-skip" onclick="tutEnd()">건너뛰기</button>
+      <button class="tut-next" id="tutNext" onclick="tutNext()">다음 →</button>
+    </div>
+  </div>
+</div>
+<button class="help-btn" onclick="tutStart()" title="튜토리얼 다시 보기">?</button>
+<script src="matter.min.js"></script><script src="assets.js"></script><script src="app.min.js"></script>
+</body></html>
